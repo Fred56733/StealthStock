@@ -1,0 +1,10 @@
+# Ignore virtual environment directories
+venv/
+
+# Ignore Chrome Driver
+chromedriver.exe
+
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+.vscode/
