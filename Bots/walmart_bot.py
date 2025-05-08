@@ -1,23 +1,34 @@
+import sys
 import os
 import time
+import random
+import tempfile
+import shutil
 import undetected_chromedriver as uc
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementClickInterceptedException, StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# Kill any existing Brave processes
-os.system("taskkill /F /IM brave.exe")
+# Get the product URL from the command-line arguments
+if len(sys.argv) < 5:
+    print("❌ No URL or max price provided. Exiting...")
+    sys.exit(1)
+product_url = sys.argv[1]
+max_price = float(sys.argv[2])
+user_data_dir = sys.argv[3]
+store = sys.argv[4]
 
-# Create options object from undetected_chromedriver, NOT normal Chrome
+# Create a unique temporary directory for this bot instance
+temp_dir = tempfile.mkdtemp()
+driver_executable_path = os.path.join(temp_dir, "chromedriver.exe")
+
+# Initialize the browser
 options = uc.ChromeOptions()
-
-# Point to Brave binary (be sure this path is correct for your system)
 options.binary_location = "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
-
-# Pass arguments correctly (these are for the browser, not URLs!)
 options.add_argument("--user-data-dir=C:\\Users\\17726\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data")
-options.add_argument("--profile-directory=Automation")
+options.add_argument(f"--user-data-dir={user_data_dir}")
+options.add_argument("--profile-directory=Automation2")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-extensions")
 options.add_argument("--no-first-run")
@@ -27,25 +38,59 @@ options.add_argument("--no-default-browser-check")
 print("Launching Brave with the following options:")
 print(options.arguments)
 
-# Launch Brave via undetected_chromedriver
-driver = uc.Chrome(options=options, version_main=135)
+try:
+    # Launch the browser with the isolated driver
+    driver = uc.Chrome(
+        options=options,
+        driver_executable_path=driver_executable_path,
+        version_main=135  # Match your local Chrome major version
+    )
 
-# Optional: Maximize window
-driver.maximize_window()
+    driver.maximize_window()
 
-# Go to the Walmart product page
-product_url = "https://www.target.com/p/pok-233-mon-trading-card-game-scarlet-38-violet-8212-destined-rivals-elite-trainer-box/-/A-94300069"
-print("Opening product page...")
+# Navigate to the Walmart product page
+print(f"Opening product page: {product_url}")
 driver.get(product_url)
 
 # Wait for the page to load
 wait = WebDriverWait(driver, 15)
 
-# Loop until "Add to cart" button appears and is clickable
+# Function to extract the price
+def get_price():
+    try:
+        price_element = driver.find_element(By.XPATH, "//span[@itemprop='price']")
+        price_text = price_element.text.replace("$", "").replace(",", "").replace("Now", "").strip()  # Clean the text
+        price = float(price_text)  # Convert cleaned text to a float        
+        print(f"💲 Current price: ${price}")
+        return price
+    except NoSuchElementException:
+        print("❌ Price element not found. Retrying...")
+        return None
+    except ValueError:
+        print("❌ Error converting price to float. Retrying...")
+        return None
+
+# Check the price
+while True:
+    print("🔁 Checking price...")
+    driver.refresh()
+    time.sleep(random.uniform(2, 5)) # Random delay between 2 and 5 seconds
+
+    current_price = get_price()
+    if current_price is not None:
+        if current_price <= max_price:
+            print(f"✅ Price is within range: ${current_price} (<= ${max_price})")
+            break
+        else:
+            print(f"🟡 Price is too high: ${current_price} (> ${max_price})")
+    else:
+        print("❌ Unable to retrieve price. Retrying...")
+
+# Check stock and add to cart
 while True:
     print("🔁 Checking stock...")
     driver.refresh()
-    time.sleep(2)
+    time.sleep(random.uniform(2, 5))  # Random delay between 2 and 5 seconds
 
     try:
         button_xpath = "//button[@aria-label[contains(., 'Add to cart')]]"
