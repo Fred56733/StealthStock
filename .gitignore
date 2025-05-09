@@ -1,6 +1,9 @@
 # Ignore virtual environment directories
 venv/
 
+# Ignore node_modules directories
+node_modules/
+
 # Ignore Chrome Driver
 chromedriver.exe
 
@@ -8,3 +11,7 @@ chromedriver.exe
 __pycache__/
 *.pyc
 .vscode/
+
+# Ignore Brave Browser user data
+/tmp/brave_user_data/
+"C:\\Users\\17726\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data/"

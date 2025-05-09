@@ -12,11 +12,8 @@ os.system("taskkill /F /IM brave.exe")
 # Create options object from undetected_chromedriver, NOT normal Chrome
 options = uc.ChromeOptions()
 
-# Point to Brave binary (be sure this path is correct for your system)
-options.binary_location = "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
-
 # Pass arguments correctly (these are for the browser, not URLs!)
-options.add_argument("--user-data-dir=C:\\Users\\17726\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data")
+options.add_argument("--user-data-dir=/tmp/brave_user_data")
 options.add_argument("--profile-directory=Automation")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-extensions")
@@ -28,7 +25,7 @@ print("Launching Brave with the following options:")
 print(options.arguments)
 
 # Launch Brave via undetected_chromedriver
-driver = uc.Chrome(options=options, version_main=135)
+driver = uc.Chrome(options=options, version_main=135, browser_executable_path='/Applications/Brave Browser.app/Contents/MacOS/Brave Browser')
 
 # Optional: Maximize window
 driver.maximize_window()
