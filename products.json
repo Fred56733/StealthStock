@@ -8,6 +8,39 @@
         "walmart":"https://www.walmart.com/ip/Pokemon-Scarlet-and-Violet-8-5-Prismatic-Evolutions-Elite-Trainer-Box/13816151308?sid=8dfac2c2-aa6c-45c8-8475-dc923f9f1294",
         "bestbuy": "https://www.bestbuy.com/site/pokemon-trading-card-game-scarlet-violet-prismatic-evolutions-booster-bundle/6608206.p?skuId=6608206"
       }
+    },
+    {
+      "name": "Scarlet & Violet - Destined Rivals Booster Bundle",
+      "auto_buy": true,
+      "max_price": 27.99,
+      "urls": {
+        "target": "https://www.target.com/p/pok-233-mon-trading-card-game-scarlet-38-violet-8212-destined-rivals-booster-bundle/-/A-94300067",
+        "walmart": "https://www.walmart.com/ip/Pokemon-TCG-Scarlet-Violet-Destined-Rivals-Booster-Bundle-6-Packs/16019713971?sid=9cc85cd5-9f73-4b61-8174-36c7eb4d474e"
+      }
+    },
+    {
+      "name": "Scarlet & Violet - Destined Rivals Elite Trainer Box",
+      "auto_buy": true,
+      "max_price": 49.99,
+      "urls": {
+        "target": "https://www.target.com/p/pok-233-mon-trading-card-game-scarlet-38-violet-8212-destined-rivals-elite-trainer-box/-/A-94300069",
+        "walmart": "https://www.walmart.com/ip/Pok-mon-TCG-Scarlet-Violet-Destined-Rivals-Pok-mon-Center-Elite-Trainer-Box/15718673510?sid=bf4f101e-9e0d-4a8f-a14f-005eb14427b3"
+      }
+    },
+    {
+      "name": "Scarlet & Violet - Prismatic Evolutions Super-Premium Collection",
+      "auto_buy": true,
+      "max_price": 99.99,
+      "urls": {
+        "target": "https://www.target.com/p/pok-233-mon-trading-card-game-scarlet-38-violet-8212-prismatic-evolutions-super-premium-collection/-/A-94300072"
+      }
+    },
+    {
+      "name": "Scarlet & Violet 3.5 - 151 Booster Bundle with 6 Booster Card Packs",
+      "auto_buy": true,
+      "max_price": 0.00,
+      "urls": {
+        "walmart": "https://www.walmart.com/ip/Pokemon-Trading-Card-Games-Scarlet-Violet-3-5-151-Booster-Bundle-with-6-Booster-Card-Packs/1160437186?sid=4e1caf6c-8aff-4e1c-aa28-6a47f9257c3f"
+      }
     }
   ]
-  

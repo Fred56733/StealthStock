@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  target:
+    build: .
+    container_name: target_bot
+    command: python Bots/target_bot.py
+
+  walmart:
+    build: .
+    container_name: walmart_bot
+    command: python Bots/walmart_bot.py
+
+  bestbuy:
+    build: .
+    container_name: bestbuy_bot
+    command: python Bots/bestbuy_bot.py
+
+  pokemoncenter:
+    build: .
+    container_name: pokemoncenter_bot
+    command: python "Bots/pokemoncenter_bot.py"
