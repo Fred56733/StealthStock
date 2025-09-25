@@ -31,7 +31,7 @@ driver = uc.Chrome(options=options, version_main=135, browser_executable_path='/
 driver.maximize_window()
 
 # Go to the Walmart product page
-product_url = "https://www.target.com/p/pok-233-mon-trading-card-game-scarlet-38-violet-8212-destined-rivals-elite-trainer-box/-/A-94300069"
+product_url = "https://www.target.com/p/pokemon-18-34-sleeping-plush-totodile/-/A-91959747#lnk=sametab"
 print("Opening product page...")
 driver.get(product_url)
 
