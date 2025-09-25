@@ -3,6 +3,9 @@ Steps for Target to purchase:
         https://       
     2. Add to cart:
         element: <button class="styles_ndsBaseButton__W8Gl7 styles_md__X_r95 styles_mdGap__9J0yq styles_fullWidth__3XX6f styles_ndsButtonPrimary__tqtKH" type="button" aria-label="Add to cart for Pokémon Trading Card Game Battle Academy" data-test="shippingButton" id="addToCartButtonOrTextIdFor90571187">Add to cart</button>
+            Errors:
+                - out of stock
+                - couldnt add to cart 
     3. View Cart / Checkout
         element: <a class="styles_ndsBaseButton__W8Gl7 styles_md__X_r95 styles_mdGap__9J0yq styles_fullWidth__3XX6f styles_ndsButtonSecondary__iSf2I" href="/cart">View cart &amp; check out</a>
     4. Max Quantity:
@@ -13,4 +16,8 @@ Steps for Target to purchase:
         element: <button class="styles_ndsBaseButton__W8Gl7 styles_md__X_r95 styles_mdGap__9J0yq styles_fullWidth__3XX6f styles_ndsButton__XOOOH styles_md__Yc3tr styles_filleddefault__7QnWt h-padding-h-default" type="button" data-test="checkout-button">Check out</button>
     6. Place Order:
         element: <button class="styles_ndsBaseButton__W8Gl7 styles_md__X_r95 styles_mdGap__9J0yq styles_fullWidth__3XX6f styles_ndsButton__XOOOH styles_md__Yc3tr styles_filleddefault__7QnWt" type="button" data-test="placeOrderButton">Place your order</button>
-    
+            Errors:
+                - card not valid 
+                - 
+                -
+                -

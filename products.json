@@ -1,6 +1,20 @@
-Products.json
-{
-    "Products":[
-
-    ]
-}
+[
+    {
+      "name": "Scarlet & Violet - Destined Rivals Booster Bundle",
+      "auto_buy": true,
+      "max_price": 27.99,
+      "urls": {
+        "target": "https://www.target.com/p/pok-233-mon-trading-card-game-scarlet-38-violet-8212-destined-rivals-booster-bundle/-/A-94300067",
+        "walmart": "https://www.walmart.com/ip/Pokemon-TCG-Scarlet-Violet-Destined-Rivals-Booster-Bundle-6-Packs/16019713971?sid=9cc85cd5-9f73-4b61-8174-36c7eb4d474e"
+      }
+    },
+    {
+      "name": "Scarlet & Violet - Destined Rivals Elite Trainer Box",
+      "auto_buy": true,
+      "max_price": 49.99,
+      "urls": {
+        "target": "https://www.target.com/p/pok-233-mon-trading-card-game-scarlet-38-violet-8212-destined-rivals-elite-trainer-box/-/A-94300069",
+        "walmart": "https://www.walmart.com/ip/Pok-mon-TCG-Scarlet-Violet-Destined-Rivals-Pok-mon-Center-Elite-Trainer-Box/15718673510?sid=bf4f101e-9e0d-4a8f-a14f-005eb14427b3"
+      }
+    }
+]
