@@ -1,0 +1,16 @@
+Steps for Target to purchase:
+    1. Open product link
+        https://       
+    2. Add to cart:
+        element: <button class="styles_ndsBaseButton__W8Gl7 styles_md__X_r95 styles_mdGap__9J0yq styles_fullWidth__3XX6f styles_ndsButtonPrimary__tqtKH" type="button" aria-label="Add to cart for Pokémon Trading Card Game Battle Academy" data-test="shippingButton" id="addToCartButtonOrTextIdFor90571187">Add to cart</button>
+    3. View Cart / Checkout
+        element: <a class="styles_ndsBaseButton__W8Gl7 styles_md__X_r95 styles_mdGap__9J0yq styles_fullWidth__3XX6f styles_ndsButtonSecondary__iSf2I" href="/cart">View cart &amp; check out</a>
+    4. Max Quantity:
+        element: <select data-test="cartItem-qty" class="styles_selectInput__5jT3n styles_selectInputSmall__Ez4tU" id="«rg»-Pok&amp;#233;mon Trading Card Game Battle Academy" style="--select-width: 100%;"><option disabled="" value=""></option><option value="0">Qty 0</option><option value="1">Qty 1</option><option value="2">Qty 2</option></select>
+        plus drop down:
+            <option value="2">Qty 2</option> Want max value wont always be the same 
+    5. Checkout:
+        element: <button class="styles_ndsBaseButton__W8Gl7 styles_md__X_r95 styles_mdGap__9J0yq styles_fullWidth__3XX6f styles_ndsButton__XOOOH styles_md__Yc3tr styles_filleddefault__7QnWt h-padding-h-default" type="button" data-test="checkout-button">Check out</button>
+    6. Place Order:
+        element: <button class="styles_ndsBaseButton__W8Gl7 styles_md__X_r95 styles_mdGap__9J0yq styles_fullWidth__3XX6f styles_ndsButton__XOOOH styles_md__Yc3tr styles_filleddefault__7QnWt" type="button" data-test="placeOrderButton">Place your order</button>
+    
