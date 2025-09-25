@@ -6,6 +6,28 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+# Navigate to the Target product page
+
+
+# Loop until "Add to cart" button appears and is clickable
+while True:
+    try:
+        print("Checking for 'Add to cart' button...")
+        add_to_cart_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Add to cart')]")))
+        print("'Add to cart' button found and clickable!")
+        add_to_cart_button.click()
+        print("Clicked 'Add to cart' button.")
+
+        # Send signal/event to target_buyer.py or another process
+
+    except (TimeoutException, NoSuchElementException, ElementClickInterceptedException, StaleElementReferenceException) as e:
+        print(f"'Add to cart' button not available yet. Retrying...")
+        try:
+            driver.refresh()
+        except Exception as refresh_err:
+            print("Refresh failed:", refresh_err)
+        time.sleep(random.uniform(1, 3))  # Wait before retrying
+
 # Go to cart page
 try:
     print("Navigating to cart page...")
