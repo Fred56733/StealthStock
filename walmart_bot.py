@@ -148,10 +148,37 @@ def run(product):
         checkout_button.click()
         print("✅ Proceeded to checkout!")
 
+        # Wait for checkout page to load and find "Place order" button
+        print("⏳ Waiting for checkout page to load...")
+        time.sleep(3)  # Give checkout page time to load
+        
+        try:
+            print("🔍 Looking for 'Place order' button...")
+            place_order_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@data-testid='place-order-button']")))
+            
+            # Get the total price from the button text
+            button_text = place_order_button.text
+            print(f"💳 Found order button: {button_text}")
+            
+            place_order_button.click()
+            print("🎉 ORDER PLACED SUCCESSFULLY! 🎉")
+            
+        except TimeoutException:
+            print("❌ Could not find 'Place order' button - checkout may require manual completion")
+            # Try alternative selectors
+            try:
+                place_order_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(@aria-label, 'Place order')]")))
+                place_order_button.click()
+                print("🎉 ORDER PLACED SUCCESSFULLY (alternative selector)! 🎉")
+            except TimeoutException:
+                print("❌ Manual checkout completion required")
+
     except Exception as e:
         print("❌ Error during checkout:", e)
 
-    time.sleep(10)
+    # Keep browser open longer to see results
+    print("⏳ Keeping browser open for 300 seconds to verify order...")
+    time.sleep(300)
     driver.quit()
 
 if __name__ == "__main__":
