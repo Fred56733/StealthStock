@@ -13,7 +13,7 @@ def launch_brave(profile_name="Automation"):
     os.system("taskkill /F /IM brave.exe")
     
     options = uc.ChromeOptions()
-    brave_data_path = r"C:\temp\brave_automation"
+    brave_data_path = r"C:\Users\17726\AppData\Local\BraveSoftware\Brave-Browser\User Data"
     
     options.add_argument(f"--user-data-dir={brave_data_path}")
     options.add_argument(f"--profile-directory={profile_name}")
@@ -68,28 +68,13 @@ def run(product):
         except (NoSuchElementException, StaleElementReferenceException):
             print("❌ Button not found or stale — retrying")
 
+    # Immediately go to cart after adding item
     try:
-        print("⏳ Waiting for cart button...")
-
-        try:
-            cart_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'View cart')]")))
-            cart_button.click()
-            print("🛒 Clicked 'View Cart'")
-        except TimeoutException:
-            try:
-                cart_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Go to cart')]")))
-                cart_button.click()
-                print("🛒 Clicked 'Go to Cart'")
-            except TimeoutException:
-                try:
-                    print("⚠️ Trying cart icon fallback...")
-                    cart_icon = driver.find_element(By.ID, "cart-button-header")
-                    cart_icon.click()
-                    print("🛒 Clicked cart icon")
-                except Exception as e:
-                    print("❌ Failed to access cart:", e)
-                    driver.quit()
-                    return
+        print("🛒 Clicking cart button in header...")
+        time.sleep(2)  # Brief wait for cart to update
+        cart_icon = wait.until(EC.element_to_be_clickable((By.ID, "cart-button-header")))
+        cart_icon.click()
+        print("🛒 Navigated to cart!")
 
         print("⏳ Waiting for 'Continue to checkout' button...")
         checkout_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Continue to checkout')]")))
