@@ -35,6 +35,7 @@ def launch_brave(profile_name="Automation"):
 
 def run(product):
     print(f"\n🚀 Starting Walmart bot for: {product['name']}")
+    print(f"💰 Max price set to: ${product['max_price']}")
     driver = launch_brave(product.get("profile", "Automation"))
     wait = WebDriverWait(driver, 15)
 
@@ -46,6 +47,25 @@ def run(product):
         print("🔁 Checking stock...")
         driver.refresh()
         time.sleep(2)
+
+        # Check price first
+        try:
+            price_element = driver.find_element(By.XPATH, "//span[@itemprop='price']")
+            price_text = price_element.text.replace('$', '').replace(',', '')
+            current_price = float(price_text)
+            print(f"💵 Current price: ${current_price}")
+            
+            if current_price > product['max_price']:
+                print(f"❌ Price ${current_price} exceeds max price ${product['max_price']} - skipping")
+                time.sleep(5)  # Wait before checking again
+                continue
+            else:
+                print(f"✅ Price ${current_price} is within budget!")
+                
+        except (NoSuchElementException, ValueError) as e:
+            print(f"⚠️ Could not get price: {e}")
+            # Continue anyway if price can't be found
+            pass
 
         # Look for add to cart
         try:
@@ -76,6 +96,53 @@ def run(product):
         cart_icon.click()
         print("🛒 Navigated to cart!")
 
+        # Maximize quantity if specified
+        if product.get('max_quantity', 1) > 1:
+            try:
+                print(f"🔢 Attempting to set quantity to {product['max_quantity']}...")
+                time.sleep(3)  # Wait longer for cart page to fully load
+                
+                # Find the current quantity with a more reliable selector
+                current_qty_element = wait.until(EC.presence_of_element_located((By.XPATH, "//span[@data-testid='quantity-label']")))
+                current_qty = int(current_qty_element.text.strip())
+                print(f"📊 Current quantity: {current_qty}")
+                
+                # Calculate clicks needed
+                target_qty = product['max_quantity']
+                clicks_needed = target_qty - current_qty
+                
+                if clicks_needed > 0:
+                    print(f"🔄 Need to click plus button {clicks_needed} times...")
+                    
+                    # More reliable plus button selector
+                    plus_button = driver.find_element(By.XPATH, "//i[@data-testid='quantity-stepper-inc-icon']/..")
+                    
+                    for i in range(clicks_needed):
+                        try:
+                            print(f"🔄 Clicking plus button (attempt {i+1}/{clicks_needed})...")
+                            plus_button.click()
+                            time.sleep(0.5)  # Slightly longer delay
+                            
+                            # Re-find button in case DOM updates
+                            plus_button = driver.find_element(By.XPATH, "//i[@data-testid='quantity-stepper-inc-icon']/..")
+                            
+                            # Check if button becomes disabled
+                            if plus_button.get_attribute("aria-disabled") == "true":
+                                print("⚠️ Reached maximum quantity limit!")
+                                break
+                                
+                        except (ElementClickInterceptedException, NoSuchElementException) as e:
+                            print(f"⚠️ Could not increase quantity further: {e}")
+                            break
+                    
+                    print(f"✅ Quantity adjustment complete!")
+                else:
+                    print(f"✅ Quantity already at desired level: {current_qty}")
+                
+            except (TimeoutException, NoSuchElementException, ValueError) as e:
+                print(f"⚠️ Could not modify quantity: {e}")
+                print("🔄 Continuing to checkout anyway...")
+
         print("⏳ Waiting for 'Continue to checkout' button...")
         checkout_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Continue to checkout')]")))
         checkout_button.click()
@@ -90,9 +157,11 @@ def run(product):
 if __name__ == "__main__":
     # Example product - replace with your actual product
     product = {
-        "name": "Mega Evo Lucario ETB",
-        "url": "https://www.walmart.com/ip/17576818418",
-        "profile": "Automation"
+        "name": "HengDidi Durable Car Wheel Hub Brush",
+        "url": "https://www.walmart.com/ip/HengDidi-Durable-Car-Wheel-Hub-Brush-Dual-Color-Bristles-for-Tire-Rim-Deep-Cleaning-with-Compact-Anti-Slip-Handle/16642907658?classType=VARIANT&athbdg=L1400",
+        "profile": "Automation",
+        "max_price": 3.52,
+        "max_quantity": 1
     }
     
     run(product)
