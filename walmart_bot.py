@@ -1,6 +1,6 @@
 import os
 import time
-import sys
+import re
 import undetected_chromedriver as uc
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementClickInterceptedException, StaleElementReferenceException
 from selenium.webdriver.common.by import By
@@ -51,16 +51,26 @@ def run(product):
         # Check price first
         try:
             price_element = driver.find_element(By.XPATH, "//span[@itemprop='price']")
-            price_text = price_element.text.replace('$', '').replace(',', '')
-            current_price = float(price_text)
-            print(f"💵 Current price: ${current_price}")
+            price_text = price_element.text
+            print(f"🏷️ Raw price text: '{price_text}'")
             
-            if current_price > product['max_price']:
-                print(f"❌ Price ${current_price} exceeds max price ${product['max_price']} - skipping")
-                time.sleep(5)  # Wait before checking again
-                continue
+            # Clean the price text more thoroughly
+            # Remove common words and keep only numbers and decimal points
+            import re
+            price_clean = re.sub(r'[^\d.]', '', price_text.replace('Now', '').replace('Was', '').replace('Save', ''))
+            
+            if price_clean:
+                current_price = float(price_clean)
+                print(f"💵 Current price: ${current_price}")
+                
+                if current_price > product['max_price']:
+                    print(f"❌ Price ${current_price} exceeds max price ${product['max_price']} - skipping")
+                    time.sleep(5)  # Wait before checking again
+                    continue
+                else:
+                    print(f"✅ Price ${current_price} is within budget!")
             else:
-                print(f"✅ Price ${current_price} is within budget!")
+                print("⚠️ Could not extract price from text")
                 
         except (NoSuchElementException, ValueError) as e:
             print(f"⚠️ Could not get price: {e}")
